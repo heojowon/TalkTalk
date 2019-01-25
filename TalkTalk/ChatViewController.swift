@@ -61,6 +61,13 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Database.database().reference().child("users").child(self.destinationUid!).observeSingleEvent(of: DataEventType.value, with: { (datasnapshot) in
+        
+            self.userModel = UserModel()
+            self.userModel?.setValuesForKeys(datasnapshot.value as! [String: Any])
+            self.navigationItem.title = self.userModel?.userName
+            
+        })
         
         textField.delegate = self
         
@@ -71,6 +78,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         checkChatRoom()
         // Do any additional setup after loading the view.
     }
+
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
