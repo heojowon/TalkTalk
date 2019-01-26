@@ -21,7 +21,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(ContactsViewTableCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
         tableView.snp.makeConstraints { (m) in
             m.top.equalTo(view)
@@ -63,10 +63,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for :indexPath)
-        let imageView = UIImageView()
-        
-        cell.addSubview(imageView)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for :indexPath) as! ContactsViewTableCell
+        let imageView = cell.imageview!
+
         imageView.snp.makeConstraints { (m) in
             m.centerY.equalTo(cell)
             m.left.equalTo(cell).offset(10)
@@ -84,9 +83,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
             
         }.resume()
         
-        let label = UILabel()
-        
-        cell.addSubview(label)
+        let label = cell.label!
+
         label.snp.makeConstraints { (m) in
             m.centerY.equalTo(cell)
             m.left.equalTo(imageView.snp.right).offset(20)
@@ -124,5 +122,23 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
      // Pass the selected object to the new view controller.
      }
      */
+    
+}
+
+class ContactsViewTableCell: UITableViewCell{
+    
+    var imageview: UIImageView! = UIImageView()
+    var label: UILabel! = UILabel()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.addSubview(imageview)
+        self.addSubview(label)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
 }

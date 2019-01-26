@@ -15,10 +15,79 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var tableView: UITableView!
     
+    // keyboard
+    @IBOutlet var bottomConstraint: NSLayoutConstraint!
+    
+    
     var uid: String?
     var chatRoomUid: String?
     var comments: [ChatModel.Comment] = []
     var userModel: UserModel?
+    
+    public var destinationUid: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Database.database().reference().child("users").child(self.destinationUid!).observeSingleEvent(of: DataEventType.value, with: { (datasnapshot) in
+            
+            self.userModel = UserModel()
+            self.userModel?.setValuesForKeys(datasnapshot.value as! [String: Any])
+            self.navigationItem.title = self.userModel?.userName
+            
+        })
+        
+        textField.delegate = self
+        uid = Auth.auth().currentUser?.uid
+        sendButton.addTarget(self, action: #selector(createRoom), for: .touchUpInside)
+        
+        checkChatRoom()
+        
+        // keyboard
+        self.tabBarController?.tabBar.isHidden = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    // keyboard
+    override func viewWillAppear(_ animated: Bool) {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // keyboard
+    @objc func keyboardWillAppear(notification: Notification) {
+        
+        if let keyboardSize = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue{
+            
+            self.bottomConstraint.constant = keyboardSize.height + 8
+        }
+        
+        UIView.animate(withDuration: 0, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: {
+            (complete) in
+            
+            if self.comments.count > 0 {
+                self.tableView.scrollToRow(at: IndexPath(item: self.comments.count - 1 , section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+            }
+        })
+    }
+    
+    // keyboard
+    @objc func keyboardWillDisappear(notification: Notification) {
+        
+        self.bottomConstraint.constant = 8
+        self.view.layoutIfNeeded()
+    }
+    
+    // keyboard hide
+    @objc func dismissKeyboard() {
+        
+        self.view.endEditing(true)
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
@@ -57,36 +126,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         return UITableView.automaticDimension
     }
     
-    public var destinationUid: String?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        Database.database().reference().child("users").child(self.destinationUid!).observeSingleEvent(of: DataEventType.value, with: { (datasnapshot) in
-        
-            self.userModel = UserModel()
-            self.userModel?.setValuesForKeys(datasnapshot.value as! [String: Any])
-            self.navigationItem.title = self.userModel?.userName
-            
-        })
-        
-        textField.delegate = self
-        
-        uid = Auth.auth().currentUser?.uid
-        
-        sendButton.addTarget(self, action: #selector(createRoom), for: .touchUpInside)
-        
-        checkChatRoom()
-        // Do any additional setup after loading the view.
-    }
-
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        self.textField.resignFirstResponder()
-        
-        return true
-    }
-    
     @objc func createRoom(){
         
         let chatRoomInfo: Dictionary<String,Any> = [
@@ -110,7 +149,10 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
                 "uid": uid!,
                 "message": textField.text!
             ]
-            Database.database().reference().child("chatRooms").child(chatRoomUid!).child("comments").childByAutoId().setValue(value)
+            Database.database().reference().child("chatRooms").child(chatRoomUid!).child("comments").childByAutoId().setValue(value, withCompletionBlock: { (error, ref ) in
+                
+                self.textField.text = ""
+            })
         }
 
     }
@@ -156,6 +198,10 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
                 self.comments.append(comment!)
             }
             self.tableView.reloadData()
+            
+            if self.comments.count > 0 {
+                self.tableView.scrollToRow(at: IndexPath(item: self.comments.count - 1 , section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+            }
         })
         
     }
@@ -174,6 +220,10 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
      // Pass the selected object to the new view controller.
      }
      */
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+    }
     
 }
 
