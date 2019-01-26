@@ -18,6 +18,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "친구"
+        
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -68,8 +70,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
 
         imageView.snp.makeConstraints { (m) in
             m.centerY.equalTo(cell)
-            m.left.equalTo(cell).offset(10)
-            m.height.width.equalTo(48)
+            m.left.equalTo(cell).offset(16)
+            m.height.width.equalTo(40)
         }
         
         
@@ -87,7 +89,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
 
         label.snp.makeConstraints { (m) in
             m.centerY.equalTo(cell)
-            m.left.equalTo(imageView.snp.right).offset(20)
+            m.left.equalTo(imageView.snp.right).offset(16)
         }
         
         label.text = array[indexPath.row].userName
@@ -96,7 +98,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate,UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        return 56
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

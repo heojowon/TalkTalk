@@ -1,5 +1,5 @@
 //
-//  ChatViewController.swift
+//  ChatViewController.swift.swift
 //  TalkTalk
 //
 //  Created by heojowon on 22/01/2019.
@@ -35,6 +35,9 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
             self.navigationItem.title = self.userModel?.userName
             
         })
+        
+        // navigationItem Color :(
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(hex: "9292ff")
         
         textField.delegate = self
         uid = Auth.auth().currentUser?.uid
@@ -99,6 +102,11 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
             let view = tableView.dequeueReusableCell(withIdentifier: "MyMessageCell", for: indexPath) as! MyMessageCell
             view.messageLabel.text = self.comments[indexPath.row].message
             view.messageLabel.numberOfLines = 0
+            
+            if let time = self.comments[indexPath.row].timestamp{
+                view.timeStampLabel?.text = time.toDayTime
+            }
+            
             return view
             
         }else{
@@ -115,6 +123,10 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
                     view.profileImageView.clipsToBounds = true
                 }
             }).resume()
+            
+            if let time = self.comments[indexPath.row].timestamp{
+                view.timeStampLabel?.text = time.toDayTime
+            }
             
             return view
         }
@@ -147,7 +159,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         }else{
             let value: Dictionary<String,Any> = [
                 "uid": uid!,
-                "message": textField.text!
+                "message": textField.text!,
+                "timestamp": ServerValue.timestamp()
             ]
             Database.database().reference().child("chatRooms").child(chatRoomUid!).child("comments").childByAutoId().setValue(value, withCompletionBlock: { (error, ref ) in
                 
@@ -227,13 +240,33 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
     
 }
 
+extension Int {
+    
+    var toDayTime: String {
+        
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "HH:mm"
+        
+        let date = NSDate(timeIntervalSince1970: Double(self)/1000)
+        
+        return dateFormatter.string(from: date as Date)
+    }
+}
+
 class MyMessageCell: UITableViewCell {
     @IBOutlet var messageLabel: UILabel!
+    
+    @IBOutlet var timeStampLabel: UILabel!
+    
     
 }
 
 class DestinationMessageCell: UITableViewCell {
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var profileImageView: UIImageView!
+    
+    @IBOutlet var timeStampLabel: UILabel!
     
 }

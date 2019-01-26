@@ -17,6 +17,7 @@
 		1C48908F21F5B4C90056B3EF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C48908E21F5B4C90056B3EF /* LoginViewController.swift */; };
 		1C48909121F5B5320056B3EF /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C48909021F5B5320056B3EF /* SignupViewController.swift */; };
 		1C835CE121F862190030EAA3 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C835CE021F862190030EAA3 /* ChatModel.swift */; };
+		1C94C88921FCBFF500909899 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C94C88821FCBFF500909899 /* ChatListViewController.swift */; };
 		1CEB59F821F60CA200602021 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEB59F721F60CA200602021 /* UserModel.swift */; };
 		1CEB59FA21F630D400602021 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEB59F921F630D400602021 /* ContactsViewController.swift */; };
 		1CEB59FC21F6F49700602021 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEB59FB21F6F49700602021 /* ChatViewController.swift */; };
@@ -36,6 +37,7 @@
 		1C48908E21F5B4C90056B3EF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1C48909021F5B5320056B3EF /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		1C835CE021F862190030EAA3 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		1C94C88821FCBFF500909899 /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		1CEB59F721F60CA200602021 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		1CEB59F921F630D400602021 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		1CEB59FB21F6F49700602021 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -79,9 +81,9 @@
 			children = (
 				1C835CDF21F861E30030EAA3 /* Model */,
 				1C48907821F5AFD20056B3EF /* AppDelegate.swift */,
+				1C7BAD3C21FCC50A00FE7BD6 /* TabBar */,
 				1C48907C21F5AFD20056B3EF /* Main.storyboard */,
 				1CEB59FB21F6F49700602021 /* ChatViewController.swift */,
-				1CEB59F921F630D400602021 /* ContactsViewController.swift */,
 				1C48907A21F5AFD20056B3EF /* ViewController.swift */,
 				1C48908E21F5B4C90056B3EF /* LoginViewController.swift */,
 				1C48909021F5B5320056B3EF /* SignupViewController.swift */,
@@ -92,6 +94,15 @@
 				1C48908C21F5B3B20056B3EF /* RemoteConfigDefaults.plist */,
 			);
 			path = TalkTalk;
+			sourceTree = "<group>";
+		};
+		1C7BAD3C21FCC50A00FE7BD6 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				1CEB59F921F630D400602021 /* ContactsViewController.swift */,
+				1C94C88821FCBFF500909899 /* ChatListViewController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		1C835CDF21F861E30030EAA3 /* Model */ = {
@@ -263,6 +274,7 @@
 				1CEB59FC21F6F49700602021 /* ChatViewController.swift in Sources */,
 				1C48907921F5AFD20056B3EF /* AppDelegate.swift in Sources */,
 				1CEB59F821F60CA200602021 /* UserModel.swift in Sources */,
+				1C94C88921FCBFF500909899 /* ChatListViewController.swift in Sources */,
 				1CEB59FA21F630D400602021 /* ContactsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
