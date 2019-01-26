@@ -42,7 +42,16 @@ class SignupViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         signupButton.addTarget(self, action: #selector(signupEvent), for: .touchUpInside)
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
         // Do any additional setup after loading the view.
+    }
+    
+    // keyboard hide
+    @objc func dismissKeyboard() {
+        
+        self.view.endEditing(true)
     }
     
     // UITextFieldDelegate Methods

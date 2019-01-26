@@ -45,7 +45,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         
         checkChatRoom()
         
-        // keyboard
         self.tabBarController?.tabBar.isHidden = true
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)

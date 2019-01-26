@@ -44,6 +44,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UITextViewDele
          }
          */
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
         color = remoteConfig["bi_color"].stringValue
         
         // statusBar.backgroundColor = UIColor(hex: color)
@@ -71,6 +74,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         self.passwordField.resignFirstResponder()
         
         return true
+    }
+    
+    // keyboard hide
+    @objc func dismissKeyboard() {
+        
+        self.view.endEditing(true)
     }
 
 
