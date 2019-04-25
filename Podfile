@@ -13,8 +13,10 @@ pod 'TextFieldEffects'
 pod 'Firebase/Core'
 pod 'Firebase/RemoteConfig'
 pod 'Firebase/Auth'
+pod 'GoogleSignIn'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
+pod 'Firebase/Messaging'
 
 pod 'ObjectMapper', '~> 3.4'
 

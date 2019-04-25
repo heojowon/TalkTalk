@@ -11,14 +11,13 @@ import Firebase
 
 class LoginViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
-    @IBOutlet var emailField: UITextField!
-    @IBOutlet var passwordField: UITextField!
-    
-    @IBOutlet var loginButton: UIButton!
-    @IBOutlet var signupButton: UIButton!
-    
     let remoteConfig = RemoteConfig.remoteConfig()
     var color : String!
+    
+    @IBOutlet var emailField: UITextField!
+    @IBOutlet var passwordField: UITextField!
+    @IBOutlet var loginButton: UIButton!
+    @IBOutlet var signupButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
